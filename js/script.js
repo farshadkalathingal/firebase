@@ -54,3 +54,46 @@ db.collection("data").doc("DGarApylkc5ys3c5CchN").withConverter(dataConverter).g
         //  console.log(data.toString());
     }
 });
+
+
+
+$('#form-submit').on('click', function(e) {
+    // alert("Hii");
+    e.preventDefault();
+    var iname, iemail, imessage;
+    iname = $('#name').val();
+    iemail = $('#email').val();
+    imessage = $('#message').val();
+
+    db.collection("messages").add({
+        name: iname,
+        email: iemail,
+        message: imessage
+    })
+    .then(function(docRef) {
+        // console.log("Document written with ID: ", docRef.id);
+        $('#name').val('');
+        $('#email').val('');
+        $('#message').val('');
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+});
+
+$('.subscribe__btn').on('click', function(e) {
+    e.preventDefault();
+
+    var email = $('.subscribe__input').val();
+
+    db.collection("subscribe").add({
+        email: email
+    })
+    .then(function(docRef) {
+        // console.log("Document written with ID: ", docRef.id);
+        $('.subscribe__input').val('');
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+});
